@@ -11,7 +11,7 @@
 #include <memory>
 
 template <typename T>
-class vector {
+class Vector {
 private:
     std::shared_ptr<T[]> elements;
     size_t size;
@@ -24,21 +24,20 @@ private:
         std::shared_ptr<T[]> new_elements(new T[new_capacity]);
         std::copy(elements.get(), elements.get() + size, new_elements.get());
         elements = new_elements;
+        capacity = new_capacity;
     }
 
 public:
-    vector() : elements(nullptr), size(0), capacity(0) {}
+    Vector() : elements(new T[1]), size(0), capacity(0) {}
 
-    ~vector() {
-        delete[] elements;
-    }
+    ~Vector() = default;
 
-    vector(const vector& other) : size(other.size), capacity(other.capacity) {
+    Vector(const Vector& other) : size(other.size), capacity(other.capacity) {
         elements = std::shared_ptr<T[]>(new T[capacity]);
         std::copy(other.elements.get(), other.elements.get() + size, elements.get());
     }
 
-    vector& operator=(const vector& other) {
+    Vector& operator=(const Vector& other) {
         if (this != other) {
             delete[] elements;
             size = other.size;

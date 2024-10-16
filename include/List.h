@@ -13,10 +13,10 @@
 #include <string>
 
 template <typename T>
-class list {
+class List {
 public:
     template <typename L>
-    friend std::ostream& operator<<(std::ostream& os, const list<L>& list);
+    friend std::ostream& operator<<(std::ostream& os, const List<L>& list);
 
 private:
     struct Node {
@@ -33,9 +33,9 @@ private:
     size_t size;
 
 public:
-    list() : head(nullptr), tail(nullptr), size(0) {}
+    List() : head(nullptr), tail(nullptr), size(0) {}
 
-    ~list() { clear(); }
+    ~List() { clear(); }
 
     void clear() {
         while (head) {
@@ -144,9 +144,9 @@ public:
  * Overloaded operator << for List
  */
 template <typename T>
-std::ostream &operator<<(std::ostream &os, const list<T> &pt)
+std::ostream &operator<<(std::ostream &os, const List<T> &pt)
 {
-    for (typename list<T>::Node *current = pt.head; current;
+    for (typename List<T>::Node *current = pt.head; current;
          current = current->next)
     {
         os << " " << current->data;
