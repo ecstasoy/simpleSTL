@@ -93,7 +93,65 @@ public:
         --size;
     }
 
+    size_t get_size() const {
+        return size;
+    }
 
+    T& operator[](size_t index) {
+        if (index >= size) {
+            std::ostringstream os;
+            os << "Index " << index << " is out of bounds!";
+            throw std::out_of_range(os.str());
+        }
+        Node* current = head.get();
+        for (size_t i = 0; i < index; ++i) {
+            current = current->next.get();
+        }
+        return current->data;
+    }
+
+    /*
+     * Iterator support
+     */
+    Node* begin() {
+        return head.get();
+    }
+
+    Node* end() {
+        return nullptr;
+    }
+
+    const Node* begin() const {
+        return head.get();
+    }
+
+    const Node* end() const {
+        return nullptr;
+    }
+
+    void printElements() const {
+        Node* current = head.get();
+        while (current) {
+            std::cout << current->data << " ";
+            current = current->next.get();
+        }
+        std::cout << std::endl;
+    }
 };
+
+/*
+ * Overloaded operator << for List
+ */
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const List<T> &pt)
+{
+    for (typename List<T>::Node *current = pt.head; current;
+         current = current->next)
+    {
+        os << " " << current->data;
+    }
+    os << std::endl;
+    return os;
+}
 
 #endif //SIMPLESTL_LIST_H

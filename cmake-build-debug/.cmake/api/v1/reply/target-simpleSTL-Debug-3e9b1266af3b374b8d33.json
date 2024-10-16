@@ -89,7 +89,8 @@
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				1
+				1,
+				2
 			]
 		}
 	],
@@ -103,7 +104,12 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "include/vector.h",
+			"path" : "include/Vector.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/List.h",
 			"sourceGroupIndex" : 1
 		}
 	],
