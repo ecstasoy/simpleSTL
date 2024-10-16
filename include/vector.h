@@ -11,7 +11,7 @@
 #include <memory>
 
 template <typename T>
-class Vector {
+class vector {
 private:
     std::shared_ptr<T[]> elements;
     size_t size;
@@ -27,18 +27,18 @@ private:
     }
 
 public:
-    Vector() : elements(nullptr), size(0), capacity(0) {}
+    vector() : elements(nullptr), size(0), capacity(0) {}
 
-    ~Vector() {
+    ~vector() {
         delete[] elements;
     }
 
-    Vector(const Vector& other) : size(other.size), capacity(other.capacity) {
+    vector(const vector& other) : size(other.size), capacity(other.capacity) {
         elements = std::shared_ptr<T[]>(new T[capacity]);
         std::copy(other.elements.get(), other.elements.get() + size, elements.get());
     }
 
-    Vector& operator=(const Vector& other) {
+    vector& operator=(const vector& other) {
         if (this != other) {
             delete[] elements;
             size = other.size;
@@ -67,11 +67,11 @@ public:
         return elements[index];
     }
 
-    size_t get_size() const {
+    [[nodiscard]] size_t get_size() const {
         return size;
     }
 
-    size_t get_capacity() const {
+    [[nodiscard]] size_t get_capacity() const {
         return capacity;
     }
 
@@ -103,7 +103,7 @@ public:
         size++;
     }
 
-    bool empty() const {
+    [[nodiscard]] bool empty() const {
         return size == 0;
     }
 

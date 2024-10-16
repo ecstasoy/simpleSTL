@@ -90,7 +90,8 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -104,12 +105,17 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "include/Vector.h",
+			"path" : "include/vector.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "include/List.h",
+			"path" : "include/list.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/deque.h",
 			"sourceGroupIndex" : 1
 		}
 	],

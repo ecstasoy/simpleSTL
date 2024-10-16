@@ -13,10 +13,10 @@
 #include <string>
 
 template <typename T>
-class List {
+class list {
 public:
     template <typename L>
-    friend std::ostream& operator<<(std::ostream& os, const List<L>& list);
+    friend std::ostream& operator<<(std::ostream& os, const list<L>& list);
 
 private:
     struct Node {
@@ -24,7 +24,7 @@ private:
         std::shared_ptr<Node> prev;
         std::shared_ptr<Node> next;
 
-        Node(const T& data, std::shared_ptr<Node> prev = nullptr, std::shared_ptr<Node> next = nullptr)
+        explicit Node(const T& data, std::shared_ptr<Node> prev = nullptr, std::shared_ptr<Node> next = nullptr)
                 : data(data), prev(prev), next(next) {}
     };
 
@@ -33,9 +33,9 @@ private:
     size_t size;
 
 public:
-    List() : head(nullptr), tail(nullptr), size(0) {}
+    list() : head(nullptr), tail(nullptr), size(0) {}
 
-    ~List() { clear(); }
+    ~list() { clear(); }
 
     void clear() {
         while (head) {
@@ -93,7 +93,7 @@ public:
         --size;
     }
 
-    size_t get_size() const {
+    [[nodiscard]] size_t get_size() const {
         return size;
     }
 
@@ -143,9 +143,9 @@ public:
  * Overloaded operator << for List
  */
 template <typename T>
-std::ostream &operator<<(std::ostream &os, const List<T> &pt)
+std::ostream &operator<<(std::ostream &os, const list<T> &pt)
 {
-    for (typename List<T>::Node *current = pt.head; current;
+    for (typename list<T>::Node *current = pt.head; current;
          current = current->next)
     {
         os << " " << current->data;
