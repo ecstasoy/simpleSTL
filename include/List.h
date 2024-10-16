@@ -41,12 +41,13 @@ public:
         while (head) {
             head = head->next;
         }
-        tail = nullptr;
+        head.reset();
+        tail.reset();
         size = 0;
     }
 
     void push_back(const T& data) {
-        Node* new_node = new Node(data, nullptr, tail);
+        auto new_node = std::make_shared<Node>(data, nullptr, tail);
         if (tail) {
             tail->next = new_node;
         }
@@ -58,7 +59,7 @@ public:
     }
 
     void push_front(const T& data) {
-        Node* new_node = new Node(data, head, nullptr);
+        auto new_node = std::make_shared<Node>(data, head, nullptr);
         if (head) {
             head->prev = new_node;
         }
@@ -74,9 +75,9 @@ public:
         tail.reset();
         tail = new_tail;
         if (tail) {
-            tail->next = nullptr;
+            tail->next.reset();
         } else {
-            head = nullptr;
+            head.reset();
         }
         --size;
     }
