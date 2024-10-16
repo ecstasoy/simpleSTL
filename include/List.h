@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <stdexcept>
-#include <iostream>
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -87,11 +86,49 @@ public:
         head.reset();
         head = new_head;
         if (head) {
-            head->prev = nullptr;
+            head->prev.reset();
         } else {
-            tail = nullptr;
+            tail.reset();
         }
         --size;
+    }
+
+    /*
+     * Find if the list contains the data, utility function
+     */
+    Node* find(const T& data) {
+        Node* current = head.get();
+        while (current) {
+            if (current->data == data) {
+                return current;
+            }
+            current = current->next.get();
+        }
+        return nullptr;
+    }
+
+    /*
+     * Remove the data from the list, utility function
+     */
+    void remove(const T& data) {
+        auto current = head;
+        while (current) {
+            if (current->data == data) {
+                if (current->prev) {
+                    current->prev->next = current->next;
+                } else {
+                    head = current->next;
+                }
+                if (current->next) {
+                    current->next->prev = current->prev;
+                } else {
+                    tail = current->prev;
+                }
+                --size;
+                return;
+            }
+            current = current->next.get();
+        }
     }
 
     [[nodiscard]] size_t get_size() const {
