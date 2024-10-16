@@ -1,16 +1,19 @@
 //
 // Created by Kunhua Huang on 10/15/24.
 //
-#pragma once
+#ifndef SIMPLESTL_LIST_H
+#define SIMPLESTL_LIST_H
+
 #include <iostream>
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>
+#include <memory>
 
 template <typename T>
 class Vector {
 private:
-    T* elements;
+    std::shared_ptr<T[]> elements;
     size_t size;
     size_t capacity;
 
@@ -18,11 +21,9 @@ private:
         if (new_capacity <= capacity) {
             return;
         }
-        T* new_elements = new T[new_capacity];
-        std::copy(elements, elements + size, new_elements);
-        delete[] elements;
+        std::shared_ptr<T[]> new_elements(new T[new_capacity]);
+        std::copy(elements.get(), elements.get() + size, new_elements.get());
         elements = new_elements;
-        capacity = new_capacity;
     }
 
 public:
@@ -33,8 +34,8 @@ public:
     }
 
     Vector(const Vector& other) : size(other.size), capacity(other.capacity) {
-        elements = new T[capacity];
-        std::copy(other.elements, other.elements + size, elements);
+        elements = std::shared_ptr<T[]>(new T[capacity]);
+        std::copy(other.elements.get(), other.elements.get() + size, elements.get());
     }
 
     Vector& operator=(const Vector& other) {
@@ -42,8 +43,8 @@ public:
             delete[] elements;
             size = other.size;
             capacity = other.capacity;
-            elements = new T[capacity];
-            std::copy(other.elements, other.elements + size, elements);
+            elements = std::shared_ptr<T[]>(new T[capacity]);
+            std::copy(other.elements.get(), other.elements.get() + size, elements.get());
         }
         return *this;
     }
@@ -97,7 +98,7 @@ public:
         if (size == capacity) {
             reserve(capacity == 0 ? 1 : capacity * 2);
         }
-        std::copy_backward(elements + index, elements + size, elements + size + 1);
+        std::copy_backward(elements.get() + index, elements.get() + size, elements.get() + size + 1);
         elements[index] = value;
         size++;
     }
@@ -121,19 +122,21 @@ public:
      * Iterator support
      */
     T* begin() {
-        return elements;
+        return elements.get();
     }
 
     T* end() {
-        return elements + size;
+        return elements.get() + size;
     }
 
     const T* begin() const {
-        return elements;
+        return elements.get();
     }
 
     const T* end() const {
-        return elements + size;
+        return elements.get() + size;
     }
 
 };
+
+#endif //SIMPLESTL_LIST_H
