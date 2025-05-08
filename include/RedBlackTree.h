@@ -444,7 +444,7 @@ public:
         return size;
     }
 
-    bool isEmpty() const {
+    bool empty() const {
         return size == 0;
     }
 
