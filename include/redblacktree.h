@@ -406,7 +406,64 @@ private:
         delete del;
     }
 
+    void deleteTree(Node *node) {
+        if (node) {
+            deleteTree(node->left);
+            deleteTree(node->right);
+            delete node;
+        }
+    }
 
+public:
+    RedBlackTree() : root(nullptr), size(0), Nil(new Node()) {
+        Nil->color = Color::BLACK;
+    }
+
+    void insert(const Key &key, const Value &value) {
+        insertNode(key, value);
+    }
+
+    void remove(const Key &key) {
+        Node *target = lookUp(key);
+        if (target) {
+            deleteNode(target);
+            size--;
+        }
+    }
+
+    Value *at(const Key &key) {
+        Node *target = lookUp(key);
+        if (target) {
+            return target->value;
+        } else {
+            throw std::out_of_range("Key not found");
+        }
+    }
+
+    int getSize() const {
+        return size;
+    }
+
+    bool isEmpty() const {
+        return size == 0;
+    }
+
+    void print() const {
+        std::cout << "Inorder Traversal: ";
+        inorderTraversal(root);
+        std::cout << std::endl;
+    }
+
+    void clear() {
+        while (root) {
+            deleteNode(root);
+        }
+        size = 0;
+    }
+
+    ~RedBlackTree() {
+        deleteTree(root);
+    }
 };
 
 #endif //SIMPLESTL_REDBLACKTREE_H
