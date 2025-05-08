@@ -3,8 +3,10 @@ project(simpleSTL)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(simpleSTL main.cpp
-        include/vector.h
-        include/list.h
-        include/deque.h
-        include/hashtable.h)
+add_executable(simpleSTL
+        include/Vector.h
+        include/List.h
+        include/Deque.h
+        include/HashTable.h
+        include/RedBlackTree.h
+)
